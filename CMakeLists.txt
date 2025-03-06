@@ -9,13 +9,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 启用实验性库支持
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-  add_compile_options(-fexperimental-library)
+  # add_compile_options(-fexperimental-library)
 elseif(MSVC)
   add_compile_options(/std:c++latest)
 endif()
 
 add_subdirectory(async)
+add_subdirectory(tests)
 
 add_executable(chelib main.cpp)
 target_link_libraries(chelib PRIVATE async)
+
 

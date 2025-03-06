@@ -1,6 +1,13 @@
 #include "threadpool.h"
 
-namespace chelib {
+namespace chelib::async {
+ThreadPool::ThreadPool(size_t min_threads, size_t max_threads,
+                       std::chrono::milliseconds max_idle_ms)
+    : min_thread_num_(min_threads), max_thread_num_(max_threads),
+      max_idle_time_(max_idle_ms) {}
+
+ThreadPool::~ThreadPool() { this->stop(); }
+
 int ThreadPool::start(size_t start_threads) {
   if (this->status_ != EStatus::STOP) {
     return -1;
@@ -115,4 +122,37 @@ bool ThreadPool::createThread() {
   this->addThread(thread);
   return true;
 }
-} // namespace chelib
+
+void ThreadPool::addThread(const std::shared_ptr<std::thread> &thread) {
+  std::scoped_lock locker{this->thread_mutex_};
+  ThreadData data;
+  data.thread_ = thread;
+  data.id_ = thread->get_id();
+  data.status_ = EStatus::RUNNING;
+  data.start_time_ = std::chrono::steady_clock::now();
+  data.stop_time_ = std::chrono::steady_clock::time_point::max();
+  this->threads_.emplace_back(data);
+  ++this->cur_thread_num_;
+}
+
+void ThreadPool::deleteThread(std::thread::id id) {
+  auto now = std::chrono::steady_clock::now();
+
+  std::scoped_lock locker{this->thread_mutex_};
+  --this->cur_thread_num_;
+  --this->idle_thread_num_;
+  auto itr = this->threads_.begin();
+  while (itr != this->threads_.end()) {
+    if (itr->status_ == EStatus::STOP && now > itr->stop_time_) {
+      if (itr->thread_->joinable()) {
+        itr->thread_->join();
+        itr = this->threads_.erase(itr);
+      }
+    } else if (itr->id_ == id) {
+      itr->status_ = EStatus::STOP;
+      itr->stop_time_ = std::chrono::steady_clock::now();
+    }
+    ++itr;
+  }
+}
+} // namespace chelib::async

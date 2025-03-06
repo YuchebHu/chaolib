@@ -1,0 +1,21 @@
+function(add_chelib_test)
+  if(ARGC LESS 1)
+    message(FATAL_ERROR "link_asio requires at least one argument (target name)")
+    return()
+  endif()
+  # 创建源文件列表
+  set(sources)
+  foreach(arg IN LISTS ARGV)
+    list(APPEND sources "${arg}.cpp")
+  endforeach()
+  set(target ${ARGV0})
+  add_executable(${target} ${sources})
+  target_link_libraries(${target} PRIVATE async)
+
+  # 添加Windows平台的预处理定义
+  if(WIN32)
+    target_compile_definitions(${target} PRIVATE _WIN32_WINNT=0x0601)
+  endif()
+endfunction()
+
+add_chelib_test(threadpool)

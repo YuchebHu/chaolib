@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <functional>
 #include <future>
+#include <iostream>
 #include <list>
 #include <memory>
 #include <mutex>
@@ -13,7 +14,7 @@
 #include <thread>
 #include <utility>
 
-namespace chelib {
+namespace chelib::async {
 constexpr size_t default_thread_pool_min_thread_num{1};
 constexpr std::chrono::milliseconds default_thread_pool_max_idle_ms{250};
 
@@ -31,6 +32,22 @@ public:
 
   virtual ~ThreadPool();
 
+  void setMinThreadNum(size_t value) { this->min_thread_num_ = value; }
+
+  void setMaxThreadNum(size_t value) { this->max_thread_num_ = value; }
+
+  void setMaxIdleTime(std::chrono::milliseconds ms) {
+    this->max_idle_time_ = ms;
+  }
+
+  size_t getCurrentThreadNum() const { return this->cur_thread_num_; }
+
+  size_t getIdleThreadNum() const { return this->idle_thread_num_; }
+
+  bool isStarted() const { return this->status_ != EStatus::STOP; }
+
+  bool isStopped() { return this->status_ == EStatus::STOP; }
+
   int start(size_t start_threads = 0);
   int stop();
   int pause();
@@ -42,14 +59,14 @@ public:
     if (this->status_ == EStatus::STOP) {
       this->start();
     }
-    if (this->cur_thread_num_ <= 0 &&
+    if (this->idle_thread_num_ <= 0 &&
         this->cur_thread_num_ < this->max_thread_num_) {
       this->createThread();
     }
 
     using RetType = decltype(fn(args...));
     auto task = std::make_shared<std::packaged_task<RetType()>>(
-        [fn = std::forward(fn), ... args = std::forward(args)] {
+        [fn = std::forward<Fn>(fn), ... args = std::forward<Args>(args)] {
           return std::invoke(std::move(fn), std::move(args)...);
         });
     std::future<RetType> future = task->get_future();
@@ -98,6 +115,6 @@ private:
   std::mutex task_mutex_{};
   std::condition_variable task_cond_{};
 };
-} // namespace chelib
+} // namespace chelib::async
 
 #endif // __THREADPOOL_H__
