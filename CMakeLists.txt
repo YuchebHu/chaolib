@@ -15,6 +15,7 @@ elseif(MSVC)
 endif()
 
 add_subdirectory(async)
+add_subdirectory(core)
 add_subdirectory(tests)
 
 add_executable(chelib main.cpp)

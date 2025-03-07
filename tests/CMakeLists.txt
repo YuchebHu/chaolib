@@ -10,7 +10,7 @@ function(add_chelib_test)
   endforeach()
   set(target ${ARGV0})
   add_executable(${target} ${sources})
-  target_link_libraries(${target} PRIVATE async)
+  target_link_libraries(${target} PRIVATE async core)
 
   # 添加Windows平台的预处理定义
   if(WIN32)
@@ -19,3 +19,4 @@ function(add_chelib_test)
 endfunction()
 
 add_chelib_test(threadpool)
+add_chelib_test(noncopyable)
