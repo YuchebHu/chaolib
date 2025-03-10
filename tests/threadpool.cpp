@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 #include "async/threadpool.h"
 
@@ -19,7 +20,6 @@ void threadPoolTest(size_t minThread, size_t maxThread, size_t taskNum) {
   std::cout << "cost: " << std::chrono::duration<double>(end - start).count()
             << std::endl
             << std::endl;
-  ;
 }
 
 int main() {
@@ -28,5 +28,8 @@ int main() {
     threadPoolTest(2, 8, taskNum);
     threadPoolTest(2, 15, taskNum);
   }
+
+  std::priority_queue<int> pq;
+  
   return 0;
 }

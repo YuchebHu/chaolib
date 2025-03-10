@@ -20,3 +20,4 @@ endfunction()
 
 add_chelib_test(threadpool)
 add_chelib_test(noncopyable)
+add_chelib_test(mpscqueue)

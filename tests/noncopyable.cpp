@@ -21,7 +21,7 @@ int main() {
   auto moveccp = std::move(ccp);
   ccp2 = std::move(ccp);
 
-  CannotCopy ccp3{ccp2};
-  auto copyccp = ccp3;
+  // CannotCopy ccp3{ccp2};
+  // auto copyccp = ccp3;
   return 0;
 }

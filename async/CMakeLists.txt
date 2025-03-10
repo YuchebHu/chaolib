@@ -1,5 +1,5 @@
 set(SRC threadpool.cpp)
-set(HEADER threadpool.h)
+set(HEADER threadpool.h mpscqueue.h)
 
 add_library(async ${SRC} ${HEADER})
 set_target_properties(async PROPERTIES PUBLIC_HEADER "${HEADER}")
