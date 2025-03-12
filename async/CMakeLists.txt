@@ -1,4 +1,4 @@
-set(SRC thread_pool.cpp)
+set(SRC thread_pool.cpp timer.cpp)
 set(HEADER thread_pool.h mpscqueue.h spin_lock.h)
 
 add_library(async ${SRC} ${HEADER})
