@@ -25,10 +25,10 @@ public:
       size_t min_threads = default_thread_pool_min_thread_num,
       size_t max_threads = std::thread::hardware_concurrency(),
       std::chrono::milliseconds max_idle_ms = default_thread_pool_max_idle_ms);
-  ThreadPool(const ThreadPool &) = delete;
-  ThreadPool &operator=(const ThreadPool &) = delete;
-  ThreadPool(ThreadPool &&) = delete;
-  ThreadPool &operator=(ThreadPool &&) = delete;
+  ThreadPool(const ThreadPool&) = delete;
+  ThreadPool& operator=(const ThreadPool&) = delete;
+  ThreadPool(ThreadPool&&) = delete;
+  ThreadPool& operator=(ThreadPool&&) = delete;
 
   virtual ~ThreadPool();
 
@@ -55,7 +55,7 @@ public:
   int wait() const;
 
   template <typename Fn, typename... Args>
-  auto submit(Fn &&fn, Args &&...args) {
+  auto submit(Fn&& fn, Args&&... args) {
     if (this->status_ == EStatus::STOP) {
       this->start();
     }
@@ -80,7 +80,7 @@ public:
 
 private:
   bool createThread();
-  void addThread(const std::shared_ptr<std::thread> &thread);
+  void addThread(const std::shared_ptr<std::thread>& thread);
   void deleteThread(std::thread::id id);
 
 private:

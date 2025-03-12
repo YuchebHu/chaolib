@@ -5,8 +5,8 @@
 class CannotCopy : private chelib::Noncopyable {
 public:
   explicit CannotCopy(int a) : a_(a) {}
-  CannotCopy(CannotCopy &&ccp) : a_(std::move(ccp.a_)) {}
-  CannotCopy &operator=(CannotCopy &&ccp) {
+  CannotCopy(CannotCopy&& ccp) : a_(std::move(ccp.a_)) {}
+  CannotCopy& operator=(CannotCopy&& ccp) {
     this->a_ = std::move(ccp.a_);
     return *this;
   }

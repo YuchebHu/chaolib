@@ -9,7 +9,7 @@ namespace async {
 template <typename T> class MpscQueue {
 public:
   MpscQueue() {
-    Node *node = new Node;
+    Node* node = new Node;
     this->head_.store(node, std::memory_order_relaxed);
     this->tail_ = node;
   }
@@ -23,15 +23,15 @@ public:
     }
   }
 
-  template <typename... Args> void enqueue(Args &&...args) {
-    Node *next = new Node;
+  template <typename... Args> void enqueue(Args&&... args) {
+    Node* next = new Node;
     next->value_ = T{std::forward<Args>(args)...};
     auto prev = this->head_.exchange(next, std::memory_order_acq_rel);
     prev->next_.store(next, std::memory_order_release);
   }
 
   std::optional<T> dequeue() {
-    Node *next = this->tail_->next_.load(std::memory_order_acquire);
+    Node* next = this->tail_->next_.load(std::memory_order_acquire);
     if (!next) {
       return std::nullopt;
     }
@@ -42,7 +42,7 @@ public:
     return result;
   }
 
-  bool dequeue(T &element) {
+  bool dequeue(T& element) {
     auto result = this->dequeue();
     if (result) {
       element = std::move(result.value());
@@ -51,7 +51,7 @@ public:
     return false;
   }
 
-  T *peek() const {
+  T* peek() const {
     auto peek = this->tail_->next_.load(std::memory_order_acquire);
     if (!peek) {
       return nullptr;
@@ -65,11 +65,11 @@ public:
 
 private:
   struct Node {
-    std::atomic<Node *> next_{nullptr};
+    std::atomic<Node*> next_{nullptr};
     T value_;
   };
-  std::atomic<Node *> head_{nullptr};
-  Node *tail_{nullptr};
+  std::atomic<Node*> head_{nullptr};
+  Node* tail_{nullptr};
 };
 } // namespace async
 

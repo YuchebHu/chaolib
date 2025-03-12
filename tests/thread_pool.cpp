@@ -6,8 +6,11 @@
 using namespace chelib;
 
 void threadPoolTest(size_t minThread, size_t maxThread, size_t taskNum) {
-  std::cout << std::format("ThreadPool({}, {}) start! Task num is {}\n",
-                           minThread, maxThread, taskNum);
+  std::cout << std::format(
+      "ThreadPool({}, {}) start! Task num is {}\n",
+      minThread,
+      maxThread,
+      taskNum);
   ThreadPool threadPool{minThread, maxThread};
   ScopedTimer timer;
   threadPool.start();

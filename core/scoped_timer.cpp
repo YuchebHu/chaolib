@@ -9,8 +9,9 @@ ScopedTimer::ScopedTimer()
 
 ScopedTimer::~ScopedTimer() {
   auto end = std::chrono::high_resolution_clock::now();
-  std::println("scoped code cost: {}s.",
-               std::chrono::duration<double>(end - this->start_).count());
+  std::println(
+      "scoped code cost: {}s.",
+      std::chrono::duration<double>(end - this->start_).count());
 }
 } // namespace scoped
 } // namespace chelib

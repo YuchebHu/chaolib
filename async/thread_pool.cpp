@@ -1,9 +1,12 @@
 #include "thread_pool.h"
 
 namespace chelib::async {
-ThreadPool::ThreadPool(size_t min_threads, size_t max_threads,
-                       std::chrono::milliseconds max_idle_ms)
-    : min_thread_num_(min_threads), max_thread_num_(max_threads),
+ThreadPool::ThreadPool(
+    size_t min_threads,
+    size_t max_threads,
+    std::chrono::milliseconds max_idle_ms)
+    : min_thread_num_(min_threads),
+      max_thread_num_(max_threads),
       max_idle_time_(max_idle_ms) {}
 
 ThreadPool::~ThreadPool() { this->stop(); }
@@ -33,7 +36,7 @@ int ThreadPool::stop() {
   this->status_wait_cond_.notify_all();
   this->task_cond_.notify_all();
 
-  for (auto &thread : this->threads_) {
+  for (auto& thread : this->threads_) {
     if (thread.thread_->joinable()) {
       thread.thread_->join();
     }
@@ -84,15 +87,18 @@ bool ThreadPool::createThread() {
     while (this->status_ != EStatus::STOP) {
       {
         std::unique_lock status_lock{this->status_wait_mutex_};
-        this->status_wait_cond_.wait(
-            status_lock, [this] { return this->status_ != EStatus::PAUSE; });
+        this->status_wait_cond_.wait(status_lock, [this] {
+          return this->status_ != EStatus::PAUSE;
+        });
       }
 
       Task task;
       {
         std::unique_lock locker{this->task_mutex_};
         this->task_cond_.wait_for(
-            locker, std::chrono::milliseconds(this->max_idle_time_), [this] {
+            locker,
+            std::chrono::milliseconds(this->max_idle_time_),
+            [this] {
               return this->status_ == EStatus::STOP || !this->tasks_.empty();
             });
         if (this->status_ == EStatus::STOP) {
@@ -123,7 +129,7 @@ bool ThreadPool::createThread() {
   return true;
 }
 
-void ThreadPool::addThread(const std::shared_ptr<std::thread> &thread) {
+void ThreadPool::addThread(const std::shared_ptr<std::thread>& thread) {
   std::scoped_lock locker{this->thread_mutex_};
   ThreadData data;
   data.thread_ = thread;

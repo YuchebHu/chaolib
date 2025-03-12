@@ -21,4 +21,11 @@ add_subdirectory(tests)
 add_executable(chelib main.cpp)
 target_link_libraries(chelib PRIVATE async)
 
+file(GLOB_RECURSE ALL_CXX_SOURCE_FILES "*.cpp" "*.h")
 
+add_custom_target(
+  format
+  COMMAND clang-format -i ${ALL_CXX_SOURCE_FILES}
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMENT "Format all .h/.cpp files"
+)
