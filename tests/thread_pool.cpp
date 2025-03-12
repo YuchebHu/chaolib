@@ -1,25 +1,21 @@
 #include <iostream>
-#include <queue>
 
-#include "async/threadpool.h"
+#include "async/thread_pool.h"
+#include "core/scoped_timer.h"
 
-using namespace chelib::async;
+using namespace chelib;
 
 void threadPoolTest(size_t minThread, size_t maxThread, size_t taskNum) {
   std::cout << std::format("ThreadPool({}, {}) start! Task num is {}\n",
                            minThread, maxThread, taskNum);
   ThreadPool threadPool{minThread, maxThread};
-  auto start = std::chrono::high_resolution_clock::now();
+  ScopedTimer timer;
   threadPool.start();
   for (size_t i = 0; i < taskNum; ++i) {
     threadPool.submit(
         []() { std::this_thread::sleep_for(std::chrono::milliseconds(10)); });
   }
   threadPool.wait();
-  auto end = std::chrono::high_resolution_clock::now();
-  std::cout << "cost: " << std::chrono::duration<double>(end - start).count()
-            << std::endl
-            << std::endl;
 }
 
 int main() {
@@ -28,8 +24,5 @@ int main() {
     threadPoolTest(2, 8, taskNum);
     threadPoolTest(2, 15, taskNum);
   }
-
-  std::priority_queue<int> pq;
-  
   return 0;
 }

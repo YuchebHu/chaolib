@@ -13,7 +13,8 @@
 #include <thread>
 #include <utility>
 
-namespace chelib::async {
+namespace chelib {
+namespace async {
 constexpr size_t default_thread_pool_min_thread_num{1};
 constexpr std::chrono::milliseconds default_thread_pool_max_idle_ms{250};
 
@@ -114,6 +115,10 @@ private:
   std::mutex task_mutex_{};
   std::condition_variable task_cond_{};
 };
-} // namespace chelib::async
+} // namespace async
+
+using ThreadPool = async::ThreadPool;
+
+} // namespace chelib
 
 #endif // __THREADPOOL_H__

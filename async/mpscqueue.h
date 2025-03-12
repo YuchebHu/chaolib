@@ -4,8 +4,8 @@
 #include <atomic>
 #include <optional>
 
-namespace chelib::async {
-
+namespace chelib {
+namespace async {
 template <typename T> class MpscQueue {
 public:
   MpscQueue() {
@@ -71,6 +71,10 @@ private:
   std::atomic<Node *> head_{nullptr};
   Node *tail_{nullptr};
 };
-} // namespace chelib::async
+} // namespace async
+
+template <typename T> using MpscQueue = async::MpscQueue<T>;
+
+} // namespace chelib
 
 #endif // __MPSCQUEUE_H__

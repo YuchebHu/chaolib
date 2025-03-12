@@ -18,6 +18,7 @@ function(add_chelib_test)
   endif()
 endfunction()
 
-add_chelib_test(threadpool)
+add_chelib_test(thread_pool)
 add_chelib_test(noncopyable)
 add_chelib_test(mpscqueue)
+add_chelib_test(scoped_timer)
