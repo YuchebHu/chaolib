@@ -11,7 +11,6 @@ function(add_chelib_test)
   set(target ${ARGV0})
   add_executable(${target} ${sources})
   target_link_libraries(${target} PRIVATE async core nlohmann_json::nlohmann_json)
-  # 确保能正确找到 nlohmann_json 头文件
   target_include_directories(${target} PRIVATE ${NLOHMANN_JSON_INCLUDE})
 endfunction()
 
@@ -21,3 +20,4 @@ add_chelib_test(mpscqueue)
 add_chelib_test(scoped_timer)
 add_chelib_test(spin_lock)
 add_chelib_test(timer)
+add_chelib_test(test)
