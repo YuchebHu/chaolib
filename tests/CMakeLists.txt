@@ -10,8 +10,9 @@ function(add_chelib_test)
   endforeach()
   set(target ${ARGV0})
   add_executable(${target} ${sources})
-  target_link_libraries(${target} PRIVATE async core)
-
+  target_link_libraries(${target} PRIVATE async core nlohmann_json::nlohmann_json)
+  # 确保能正确找到 nlohmann_json 头文件
+  target_include_directories(${target} PRIVATE ${NLOHMANN_JSON_INCLUDE})
 endfunction()
 
 add_chelib_test(thread_pool)

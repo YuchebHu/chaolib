@@ -14,6 +14,8 @@ elseif(MSVC)
   add_compile_options(/std:c++latest)
 endif()
 
+add_subdirectory(extern)
+
 add_subdirectory(async)
 add_subdirectory(core)
 add_subdirectory(tests)
