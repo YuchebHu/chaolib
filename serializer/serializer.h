@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __SERIALIZER_H__
+#define __SERIALIZER_H__
+
 #include <tuple>
 
 #include "nlohmann/json.hpp"
@@ -52,3 +54,5 @@ template <typename T> JSON to_json(const T& object) {
 
 } // namespace serializer
 } // namespace chaolib
+
+#endif // __SERIALIZER_H__
