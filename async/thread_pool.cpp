@@ -1,6 +1,6 @@
 #include "thread_pool.h"
 
-namespace chelib::async {
+namespace chaolib::async {
 ThreadPool::ThreadPool(
     size_t min_threads,
     size_t max_threads,
@@ -161,4 +161,4 @@ void ThreadPool::deleteThread(std::thread::id id) {
     ++itr;
   }
 }
-} // namespace chelib::async
+} // namespace chaolib::async

@@ -2,7 +2,7 @@
 #define __SPIN_LOCK_H__
 #include <atomic>
 
-namespace chelib {
+namespace chaolib {
 namespace async {
 class SpinLock {
 public:
@@ -20,5 +20,5 @@ private:
 } // namespace async
 using SpinLock = async::SpinLock;
 
-} // namespace chelib
+} // namespace chaolib
 #endif // __SPIN_LOCK_H__

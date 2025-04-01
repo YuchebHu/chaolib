@@ -4,7 +4,7 @@
 #include <atomic>
 #include <optional>
 
-namespace chelib {
+namespace chaolib {
 namespace async {
 template <typename T> class MpscQueue {
 public:
@@ -75,6 +75,6 @@ private:
 
 template <typename T> using MpscQueue = async::MpscQueue<T>;
 
-} // namespace chelib
+} // namespace chaolib
 
 #endif // __MPSCQUEUE_H__

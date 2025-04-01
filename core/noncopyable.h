@@ -1,7 +1,7 @@
 #ifndef __NONCOPYABLE_H__
 #define __NONCOPYABLE_H__
 
-namespace chelib {
+namespace chaolib {
 namespace noncopyable {
 class Noncopyable {
 public:
@@ -13,6 +13,6 @@ public:
 } // namespace noncopyable
 
 using Noncopyable = noncopyable::Noncopyable;
-} // namespace chelib
+} // namespace chaolib
 
 #endif // __NONCOPYABLE_H__

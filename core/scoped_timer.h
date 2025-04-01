@@ -2,7 +2,7 @@
 #define __SCOPED_TIMER_H__
 #include <chrono>
 
-namespace chelib {
+namespace chaolib {
 namespace scoped {
 class ScopedTimer {
 public:
@@ -14,6 +14,6 @@ private:
 };
 } // namespace scoped
 using ScopedTimer = scoped::ScopedTimer;
-} // namespace chelib
+} // namespace chaolib
 
 #endif // __SCOPED_TIMER_H__

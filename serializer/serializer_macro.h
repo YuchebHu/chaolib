@@ -3,7 +3,7 @@
 #include "static_property.h"
 
 #define MAKE_PROPERTY(...)
-#define MAKE_PROPERTY_1(a) chelib::serializer::property(&THIS::a, #a)
+#define MAKE_PROPERTY_1(a) chaolib::serializer::property(&THIS::a, #a)
 #define MAKE_PROPERTY_2(a, ...)                                                \
   EXPAND(MAKE_PROPERTY_1(a), MAKE_PROPERTY_1(__VA_ARGS__))
 #define MAKE_PROPERTY_3(a, ...)                                                \
@@ -19,7 +19,7 @@
   template <typename JSON, typename T = Type>                                  \
   static void from_json(const JSON& json, Type& object) {                      \
     constexpr auto size = std::tuple_size<decltype(Type::kProperties)>::value; \
-    chelib::serializer::for_sequence(                                          \
+    chaolib::serializer::for_sequence(                                         \
         std::make_index_sequence<size>{},                                      \
         [&](auto i) {                                                          \
           constexpr auto property = std::get<i>(Type::kProperties);            \
@@ -32,7 +32,7 @@
   template <typename JSON, typename T = Type>                                  \
   static void to_json(JSON& json, const Type& object) {                        \
     constexpr auto size = std::tuple_size<decltype(Type::kProperties)>::value; \
-    chelib::serializer::for_sequence(                                          \
+    chaolib::serializer::for_sequence(                                         \
         std::make_index_sequence<size>{},                                      \
         [&](auto i) {                                                          \
           constexpr auto property = std::get<i>(Type::kProperties);            \

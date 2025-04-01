@@ -2,7 +2,7 @@
 
 #include "core/noncopyable.h"
 
-class CannotCopy : private chelib::Noncopyable {
+class CannotCopy : private chaolib::Noncopyable {
 public:
   explicit CannotCopy(int a) : a_(a) {}
   CannotCopy(CannotCopy&& ccp) : a_(std::move(ccp.a_)) {}

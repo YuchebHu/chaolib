@@ -3,7 +3,7 @@
 #include <chrono>
 #include <thread>
 
-namespace chelib::async {
+namespace chaolib::async {
 void timeout(std::function<void()> func, int time) {
   std::jthread{[time, func = std::move(func)] {
     std::this_thread::sleep_for(std::chrono::milliseconds(time));
@@ -27,4 +27,4 @@ std::stop_source setInterval(std::function<void()> func, int interval) {
   thread.detach();
   return result;
 }
-} // namespace chelib::async
+} // namespace chaolib::async

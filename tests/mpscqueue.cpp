@@ -4,7 +4,7 @@
 
 #include "async/mpscqueue.h"
 
-using namespace chelib::async;
+using namespace chaolib::async;
 
 int main() {
   {

@@ -3,7 +3,7 @@
 
 #include "core/scoped_timer.h"
 
-using namespace chelib;
+using namespace chaolib;
 
 int main() {
   {

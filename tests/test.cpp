@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "nlohmann/json.hpp"
+
 #include "serializer/serializer.h"
 
 struct Test {

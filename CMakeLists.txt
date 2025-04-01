@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.0)
-project(chelib VERSION 0.1.0 LANGUAGES C CXX)
+project(chaolib VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -21,8 +21,8 @@ add_subdirectory(core)
 add_subdirectory(serializer)
 add_subdirectory(tests)
 
-add_executable(chelib main.cpp)
-target_link_libraries(chelib PRIVATE async)
+add_executable(chaolib main.cpp)
+target_link_libraries(chaolib PRIVATE async)
 
 file(GLOB_RECURSE ALL_CXX_SOURCE_FILES "*.cpp" "*.h")
 

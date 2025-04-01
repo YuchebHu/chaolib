@@ -3,7 +3,7 @@
 #include "async/thread_pool.h"
 #include "core/scoped_timer.h"
 
-using namespace chelib;
+using namespace chaolib;
 
 void threadPoolTest(size_t minThread, size_t maxThread, size_t taskNum) {
   std::cout << std::format(

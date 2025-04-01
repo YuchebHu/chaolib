@@ -7,7 +7,7 @@
 #include "serializer_macro.h"
 #include "static_property.h"
 
-namespace chelib {
+namespace chaolib {
 namespace serializer {
 template <typename T, T... S, typename F>
 constexpr void for_sequence(std::integer_sequence<T, S...>, F&& f) {
@@ -18,7 +18,7 @@ using JSON = nlohmann::json;
 
 template <typename T> void from_json(const JSON& json, T& object) {
   constexpr auto size = std::tuple_size<decltype(T::kProperties)>::value;
-  chelib::serializer::for_sequence(
+  chaolib::serializer::for_sequence(
       std::make_index_sequence<size>{},
       [&](auto i) {
         constexpr auto property = std::get<i>(T::kProperties);
@@ -36,7 +36,7 @@ template <typename T> T from_json(const JSON& json) {
 
 template <typename T> void to_json(JSON& json, const T& object) {
   constexpr auto size = std::tuple_size<decltype(T::kProperties)>::value;
-  chelib::serializer::for_sequence(
+  chaolib::serializer::for_sequence(
       std::make_index_sequence<size>{},
       [&](auto i) {
         constexpr auto property = std::get<i>(T::kProperties);
@@ -51,4 +51,4 @@ template <typename T> JSON to_json(const T& object) {
 }
 
 } // namespace serializer
-} // namespace chelib
+} // namespace chaolib

@@ -2,7 +2,7 @@
 
 #include <string_view>
 
-namespace chelib {
+namespace chaolib {
 namespace serializer {
 template <typename Class, typename T> struct StaticProperty {
   constexpr StaticProperty(T Class::* member, std::string_view name)
@@ -20,4 +20,4 @@ constexpr auto property(T Class::* member, std::string_view name) {
 }
 
 } // namespace serializer
-} // namespace chelib
+} // namespace chaolib

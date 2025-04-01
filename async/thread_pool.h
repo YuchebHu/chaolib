@@ -13,7 +13,7 @@
 #include <thread>
 #include <utility>
 
-namespace chelib {
+namespace chaolib {
 namespace async {
 constexpr size_t default_thread_pool_min_thread_num{1};
 constexpr std::chrono::milliseconds default_thread_pool_max_idle_ms{250};
@@ -119,6 +119,6 @@ private:
 
 using ThreadPool = async::ThreadPool;
 
-} // namespace chelib
+} // namespace chaolib
 
 #endif // __THREADPOOL_H__

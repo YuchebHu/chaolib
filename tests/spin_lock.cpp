@@ -7,7 +7,7 @@
 
 #define sync_stream std::osyncstream(std::cout)
 
-using namespace chelib;
+using namespace chaolib;
 
 int main() {
   SpinLock spin_lock;

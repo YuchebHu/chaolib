@@ -2,7 +2,7 @@
 
 #include <print>
 
-namespace chelib {
+namespace chaolib {
 namespace scoped {
 ScopedTimer::ScopedTimer()
     : start_(std::chrono::high_resolution_clock::now()) {}
@@ -14,4 +14,4 @@ ScopedTimer::~ScopedTimer() {
       std::chrono::duration<double>(end - this->start_).count());
 }
 } // namespace scoped
-} // namespace chelib
+} // namespace chaolib
