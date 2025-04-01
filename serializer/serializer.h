@@ -5,7 +5,6 @@
 
 #include "nlohmann/json.hpp"
 
-#include "macro.h"
 #include "serializer_macro.h"
 #include "static_property.h"
 

@@ -24,11 +24,23 @@ add_subdirectory(tests)
 add_executable(chaolib main.cpp)
 target_link_libraries(chaolib PRIVATE async)
 
-file(GLOB_RECURSE ALL_CXX_SOURCE_FILES "*.cpp" "*.h")
+set(FORMAT_DIRECTORIES
+  async
+  core
+  serializer
+  tests
+)
+set(PENDING_FORMAT_SOURCES)
+foreach(DIR ${FORMAT_DIRECTORIES})
+  file(GLOB_RECURSE DIR_FORMAT_FILES
+    ${DIR}/*.cpp
+    ${DIR}/*.h)
+  list(APPEND PENDING_FORMAT_SOURCES ${DIR_FORMAT_FILES})
+endforeach()
 
 add_custom_target(
   format
-  COMMAND clang-format -i ${ALL_CXX_SOURCE_FILES}
+  COMMAND clang-format -i ${PENDING_FORMAT_SOURCES}
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMENT "Format all .h/.cpp files"
 )
