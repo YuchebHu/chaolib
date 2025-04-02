@@ -1,6 +1,7 @@
 #ifndef __SERIALIZER_MACRO_H__
 #define __SERIALIZER_MACRO_H__
 
+#include "serializer_internal.h"
 #include "static_property.h"
 
 #define EXPAND(...) __VA_ARGS__
