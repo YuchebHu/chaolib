@@ -10,9 +10,14 @@
 namespace chaolib {
 namespace serializer {
 
-template <typename Class, typename T>
-constexpr auto property(T Class::* member, std::string_view name) {
-  return StaticProperty<Class, T>{member, name};
+template <typename Class, typename T, typename... ALIAS>
+constexpr auto make_member_property(T Class::*member, ALIAS... aliases)
+    -> MemberProperty<Class, T, std::tuple_size_v<std::tuple<ALIAS...>>> {
+  using Tuple = std::tuple<ALIAS...>;
+  constexpr auto size = std::tuple_size_v<Tuple>;
+  return MemberProperty<Class, T, size>(
+      member,
+      std::array<std::string_view, size>{aliases...});
 }
 
 template <typename T, T... S, typename F>
@@ -28,9 +33,11 @@ template <typename T> void from_json(const JSON& json, T& object) {
       std::make_index_sequence<size>{},
       [&](auto i) {
         constexpr auto property = std::get<i>(T::kProperties);
-        if (json.contains(property.name_)) {
-          object.*(property.member_) = json[property.name_];
-        }
+        for (auto name : property.names_)
+          if (json.contains(name)) {
+            object.*(property.member_) = json[name];
+            break;
+          }
       });
 }
 
@@ -45,8 +52,8 @@ template <typename T> void to_json(JSON& json, const T& object) {
   chaolib::serializer::for_sequence(
       std::make_index_sequence<size>{},
       [&](auto i) {
-        constexpr auto property = std::get<i>(T::kProperties);
-        json[property.name_] = object.*(property.member_);
+        constexpr auto& property = std::get<i>(T::kProperties);
+        json[property.names_[0]] = object.*(property.member_);
       });
 }
 

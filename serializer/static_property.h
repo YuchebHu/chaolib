@@ -7,14 +7,14 @@
 
 namespace chaolib {
 namespace serializer {
-template <typename Class, typename T> struct StaticProperty {
-  constexpr StaticProperty(T Class::*member, std::string_view name)
-      : member_{member}, name_{name} {}
-
-  using Type = T;
+template <typename Class, typename T, int N> struct MemberProperty {
+  constexpr MemberProperty(
+      T Class::*member,
+      std::array<std::string_view, N> names)
+      : member_(member), names_(std::move(names)) {}
 
   T Class::*member_;
-  std::string_view name_;
+  std::array<std::string_view, N> names_;
 };
 
 } // namespace serializer
