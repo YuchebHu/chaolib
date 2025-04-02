@@ -5,7 +5,7 @@
 
 #include "nlohmann/json.hpp"
 
-#include "static_property.h"
+#include "member_property.h"
 
 namespace chaolib {
 namespace serializer {
