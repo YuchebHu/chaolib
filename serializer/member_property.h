@@ -1,5 +1,5 @@
-#ifndef __STATIC_PROPERTY_H__
-#define __STATIC_PROPERTY_H__
+#ifndef __MEMBER_PROPERTY_H__
+#define __MEMBER_PROPERTY_H__
 
 #pragma once
 
@@ -21,4 +21,4 @@ template <typename Class, typename T, int N> struct MemberProperty {
 } // namespace serializer
 } // namespace chaolib
 
-#endif // __STATIC_PROPERTY_H__
+#endif // __MEMBER_PROPERTY_H__
