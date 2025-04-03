@@ -1,21 +1,6 @@
-#include <array>
 #include <iostream>
-#include <string_view>
-#include <tuple>
 
 #include "serializer/serializer.h"
-
-struct Test {
-  int a_;
-  double b_;
-  bool c_;
-
-  SERIALIZER_WITH_ALIAS(
-      Test,
-      MAKE_ALIAS(a_, "A", "a_"),
-      MAKE_ALIAS(b_, "b_", "B"),
-      MAKE_ALIAS(c_, "c_", "C"));
-};
 
 struct TestB {
   int a_;
@@ -27,6 +12,18 @@ struct TestB {
 
 int main() {
   using namespace chaolib::serializer;
+
+  struct Test {
+    int a_;
+    double b_;
+    bool c_;
+
+    SERIALIZER_WITH_ALIAS(
+        Test,
+        MAKE_ALIAS(a_, "A", "a_"),
+        MAKE_ALIAS(b_, "b_", "B"),
+        MAKE_ALIAS(c_, "c_", "C"));
+  };
   {
     nlohmann::json newTest;
     newTest["A"] = 10;
