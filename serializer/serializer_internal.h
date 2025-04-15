@@ -10,7 +10,7 @@ namespace serializer {
 
 template <typename Class, typename T, typename... ALIAS>
 constexpr auto make_member_property(T Class::* member, ALIAS... aliases)
-    -> MemberProperty<Class, T, std::tuple_size_v<std::tuple<ALIAS...>>> {
+    -> MemberProperty<Class, T, sizeof...(aliases)> {
   constexpr auto size = sizeof...(aliases);
   return MemberProperty<Class, T, size>(
       member,
